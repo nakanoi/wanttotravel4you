@@ -26,6 +26,8 @@ amplify
 
 .vscode
 
+export_ignore.js
+
 #amplify-do-not-edit-begin
 amplify/\#current-cloud-backend
 amplify/.config/local-*

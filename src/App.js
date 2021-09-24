@@ -1,30 +1,72 @@
 import './App.css';
 import React from 'react';
-import {BrowserRouter as Router, Route, Link} from "react-router-dom"
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
+
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import { AmplifyAuthenticator, AmplifySignUp, AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
+import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
+import awsmobile from './aws-exports';
+
 import Home from './components/Home'
 import Services from './components/Services';
-import Account from './components/Account'
-import Tourist from './components/Tourist'
-import Agent from './components/Agent';
+import Type from './components/Type';
+Amplify.configure(awsmobile);
 
-function App() {
-  return (
-    <Router>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/services/">Services</Link></li>
-          <li><Link to="/account/">Sign Up or Sign In</Link></li>
-        </ul>
-      </nav>
-      <Route path="/" exact component={Home} />
-      <Route path="/services/" exact component={Services} />
-      <Route path="/account/" exact component={Account} />
-      <Route path="/tourist/" exact component={Tourist} />
-      <Route path="/agent/" exact component={Agent} />
-    </Router>
+const App = () => {
+  const [authState, setAuthState] = React.useState();
+  const [user, setUser] = React.useState();
+
+  React.useEffect(() => {
+    return onAuthUIStateChange((nextAuthState, authData) => {
+      setAuthState(nextAuthState);
+      setUser(authData);
+    });
+  }, []);
+
+  return authState === AuthState.SignedIn && user ? (
+    <div>
+      <Router>
+        <Switch>
+          <nav>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/services/">Services</Link></li>
+            </ul>
+          </nav>
+          <Route path="/" exact component={Home} />
+          <Route path="/services/" exact component={Services} />
+        </Switch>
+      </Router>
+      <div>Hello, {user.username}</div>
+      <AmplifySignOut />
+      <Type user={user.username} />
+    </div>
+  ) : (
+    <div>
+      <Router>
+        <Switch>
+          <nav>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/services/">Services</Link></li>
+            </ul>
+          </nav>
+          <Route path="/" exact component={Home} />
+          <Route path="/services/" exact component={Services} />
+        </Switch>
+      </Router>
+      <AmplifyAuthenticator>
+        <AmplifySignUp
+          slot="sign-up"
+          formFields={[
+            { type: "username" },
+            { type: "password" },
+            { type: "email" }
+          ]}
+        />
+      </AmplifyAuthenticator>
+    </div>
   );
 }
 
-export default App;
-
+export default withAuthenticator(App);
