@@ -1,43 +1,21 @@
-/*import './App.css';
+import './App.css';
 import React from 'react';
-import {BrowserRouter as Router, Route, Link} from "react-router-dom"
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom"
+
+import Amplify, { Auth, API, graphqlOperation } from 'aws-amplify';
+import { AmplifyAuthenticator, AmplifySignUp, AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
+import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
+import awsmobile from './aws-exports';
+
 import Home from './components/Home'
 import Services from './components/Services';
-import Accounts from './components/Accounts'
-
-function App() {
-  return (
-    <Router>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/services/">Services</Link></li>
-          <li><Link to="/accounts/">Accounts</Link></li>
-        </ul>
-      </nav>
-      <Route path="/" exact component={Home} />
-      <Route path="/services/" exact component={Services} />
-      <Route path="/accounts/" component={Accounts} />
-    </Router>
-  );
-}
-
-export default App;*/
-import React from "react";
-import Amplify from "aws-amplify";
-import {
-  AmplifyAuthenticator,
-  AmplifySignUp,
-  AmplifySignOut,
-} from '@aws-amplify/ui-react'
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
-import awsconfig from './aws-exports';
-
-Amplify.configure(awsconfig);
+import Type from './components/Type';
+Amplify.configure(awsmobile);
 
 const App = () => {
   const [authState, setAuthState] = React.useState();
   const [user, setUser] = React.useState();
+
   React.useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
       setAuthState(nextAuthState);
@@ -45,21 +23,50 @@ const App = () => {
     });
   }, []);
 
-
   return authState === AuthState.SignedIn && user ? (
     <div>
-      <h2>Welcome! {user.username}</h2>
+      <Router>
+        <Switch>
+          <nav>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/services/">Services</Link></li>
+            </ul>
+          </nav>
+          <Route path="/" exact component={Home} />
+          <Route path="/services/" exact component={Services} />
+        </Switch>
+      </Router>
+      <div>Hello, {user.username}</div>
       <AmplifySignOut />
+      <Type user={user.username} />
     </div>
   ) : (
     <div>
-      <h2>Sign Up</h2>
+      <Router>
+        <Switch>
+          <nav>
+            <ul>
+              <li><Link to="/">Home</Link></li>
+              <li><Link to="/services/">Services</Link></li>
+            </ul>
+          </nav>
+          <Route path="/" exact component={Home} />
+          <Route path="/services/" exact component={Services} />
+        </Switch>
+      </Router>
       <AmplifyAuthenticator>
-        <AmplifySignUp slot="sign-up" />
+        <AmplifySignUp
+          slot="sign-up"
+          formFields={[
+            { type: "username" },
+            { type: "password" },
+            { type: "email" }
+          ]}
+        />
       </AmplifyAuthenticator>
     </div>
   );
 }
 
-export default App;
-
+export default withAuthenticator(App);
