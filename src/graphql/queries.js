@@ -28,6 +28,37 @@ export const listTourists = /* GraphQL */ `
     }
   }
 `;
+export const getAgent = /* GraphQL */ `
+  query GetAgent($id: ID!) {
+    getAgent(id: $id) {
+      type
+      id
+      business
+      area
+      owner
+      timestamp
+    }
+  }
+`;
+export const listAgents = /* GraphQL */ `
+  query ListAgents(
+    $filter: ModelAgentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAgents(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        type
+        id
+        business
+        area
+        owner
+        timestamp
+      }
+      nextToken
+    }
+  }
+`;
 export const getRequest = /* GraphQL */ `
   query GetRequest($id: ID!) {
     getRequest(id: $id) {
@@ -151,6 +182,64 @@ export const listTouristBySpecificOwner = /* GraphQL */ `
       items {
         type
         id
+        owner
+        timestamp
+      }
+      nextToken
+    }
+  }
+`;
+export const listAgentByTimestamp = /* GraphQL */ `
+  query ListAgentByTimestamp(
+    $type: String
+    $timestamp: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelAgentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAgentByTimestamp(
+      type: $type
+      timestamp: $timestamp
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        business
+        area
+        owner
+        timestamp
+      }
+      nextToken
+    }
+  }
+`;
+export const listAgentBySpecificOwner = /* GraphQL */ `
+  query ListAgentBySpecificOwner(
+    $owner: String
+    $timestamp: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelAgentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAgentBySpecificOwner(
+      owner: $owner
+      timestamp: $timestamp
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        business
+        area
         owner
         timestamp
       }

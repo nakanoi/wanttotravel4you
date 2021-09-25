@@ -21,6 +21,42 @@ export const onDeleteTourist = /* GraphQL */ `
     }
   }
 `;
+export const onCreateAgent = /* GraphQL */ `
+  subscription OnCreateAgent {
+    onCreateAgent {
+      type
+      id
+      business
+      area
+      owner
+      timestamp
+    }
+  }
+`;
+export const onUpdateAgent = /* GraphQL */ `
+  subscription OnUpdateAgent {
+    onUpdateAgent {
+      type
+      id
+      business
+      area
+      owner
+      timestamp
+    }
+  }
+`;
+export const onDeleteAgent = /* GraphQL */ `
+  subscription OnDeleteAgent {
+    onDeleteAgent {
+      type
+      id
+      business
+      area
+      owner
+      timestamp
+    }
+  }
+`;
 export const onCreateRequest = /* GraphQL */ `
   subscription OnCreateRequest {
     onCreateRequest {
