@@ -27,6 +27,51 @@ export const deleteTourist = /* GraphQL */ `
     }
   }
 `;
+export const createAgent = /* GraphQL */ `
+  mutation CreateAgent(
+    $input: CreateAgentInput!
+    $condition: ModelAgentConditionInput
+  ) {
+    createAgent(input: $input, condition: $condition) {
+      type
+      id
+      business
+      area
+      owner
+      timestamp
+    }
+  }
+`;
+export const updateAgent = /* GraphQL */ `
+  mutation UpdateAgent(
+    $input: UpdateAgentInput!
+    $condition: ModelAgentConditionInput
+  ) {
+    updateAgent(input: $input, condition: $condition) {
+      type
+      id
+      business
+      area
+      owner
+      timestamp
+    }
+  }
+`;
+export const deleteAgent = /* GraphQL */ `
+  mutation DeleteAgent(
+    $input: DeleteAgentInput!
+    $condition: ModelAgentConditionInput
+  ) {
+    deleteAgent(input: $input, condition: $condition) {
+      type
+      id
+      business
+      area
+      owner
+      timestamp
+    }
+  }
+`;
 export const createRequest = /* GraphQL */ `
   mutation CreateRequest(
     $input: CreateRequestInput!

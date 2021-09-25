@@ -7,12 +7,17 @@ import {
   ListItem,
   ListItemText,
 } from '@material-ui/core';
-import { createTourist } from '../graphql/mutations'
+import { createTourist, createAgent, updateAgent } from '../graphql/mutations'
 import { listTouristBySpecificOwner } from '../graphql/queries';
 import Request from './Request';
+import Agent from './Agent';
+import UpdateAgent from './UpdateAgent';
 
 const Type = (props) => {
   const [type, SetType] = React.useState(null);
+  const [isAgentRegisterd, SetIsAgentRegisterd] = React.useState(false);
+  const [agentArea, SetAgentArea] = React.useState(null);
+  const [agentBusiness, SetAgentBusiness] = React.useState(null);
   const [count, Counter] = React.useState(0);
 
   // UserType
@@ -32,7 +37,12 @@ const Type = (props) => {
         SetType(null);
       } else {
         if (res.data.listTouristBySpecificOwner.items.length > 0) {
-          SetType(res.data.listTouristBySpecificOwner.items[0].type); 
+          var info = res.data.listTouristBySpecificOwner.items[0];
+          SetType(info.type); 
+          if (type === 'agent' && info.area !== null && info.business !== null) {
+            SetAgentArea(info.area);
+            SetAgentArea(info.business);
+          }
         }
       }
     }
@@ -56,7 +66,19 @@ const Type = (props) => {
   // Agent Register
   const registerAgent = async () => {
     const res = await API.graphql(
-      graphqlOperation(createTourist, {
+      graphqlOperation(createAgent, {
+        input: {
+          type: "agent",
+          timestamp: Math.floor(Date.now() / 1000)
+        }
+      })
+    );
+  }
+
+  // Agent Register Information
+  const registerAgentInfo = async () => {
+    const res = await API.graphql(
+      graphqlOperation(updateAgent, {
         input: {
           type: "agent",
           timestamp: Math.floor(Date.now() / 1000)
@@ -92,14 +114,9 @@ const Type = (props) => {
     <div>
       <p>You Are { type }</p>
       {type === "tourist" ? (
-        <Router>
-          <Switch>
-            <p><Link to="/request/">REQUEST</Link></p>
-            <Route path="/request/" exact component={Request} />
-          </Switch>
-        </Router>
+        <Request />
       ) : (
-        <p></p>
+        {}
       )}
     </div>
   );

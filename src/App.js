@@ -26,16 +26,14 @@ const App = () => {
   return authState === AuthState.SignedIn && user ? (
     <div>
       <Router>
-        <Switch>
-          <nav>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/services/">Services</Link></li>
-            </ul>
-          </nav>
-          <Route path="/" exact component={Home} />
-          <Route path="/services/" exact component={Services} />
-        </Switch>
+        <nav>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/services/">Services</Link></li>
+          </ul>
+        </nav>
+        <Route path="/" exact component={Home} />
+        <Route path="/services/" exact component={Services} />
       </Router>
       <div>Hello, {user.username}</div>
       <AmplifySignOut />
@@ -44,16 +42,14 @@ const App = () => {
   ) : (
     <div>
       <Router>
-        <Switch>
-          <nav>
-            <ul>
-              <li><Link to="/">Home</Link></li>
-              <li><Link to="/services/">Services</Link></li>
-            </ul>
-          </nav>
-          <Route path="/" exact component={Home} />
-          <Route path="/services/" exact component={Services} />
-        </Switch>
+        <nav>
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/services/">Services</Link></li>
+          </ul>
+        </nav>
+        <Route path="/" exact component={Home} />
+        <Route path="/services/" exact component={Services} />
       </Router>
       <AmplifyAuthenticator>
         <AmplifySignUp
