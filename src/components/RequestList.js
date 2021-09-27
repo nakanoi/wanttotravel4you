@@ -1,6 +1,5 @@
 import React from 'react';
-
-import { makeStyles } from '@material-ui/core/styles';
+import { Link, withRouter } from 'react-router-dom';
 import {
   Button,
   List,
@@ -8,39 +7,13 @@ import {
   ListItemText,
   CircularProgress,
 } from '@material-ui/core';
+import UUID from 'uuidjs';
 
-const useStyles = makeStyles(theme => ({
-  listRoot: {
-    width: '100%',
-    wordBreak: 'break-all',
-    overflow: 'scroll',
-    borderRight: '1px solid #37444C',
-  },
-  alignCenter: {
-    textAlign: 'center',
-  },
-  loader: {
-    textAlign: 'center',
-    paddingTop: 20,
-  },
-  listHeader: {
-    position: 'sticky',
-    top: 0,
-    zIndex: 1200,
-    backgroundColor: '#15202B',
-    borderBottom: '1px solid #37444C',
-  },
-  clickable: {
-    cursor: 'pointer',
-  }
-}));
-
-export default function RequestList({ isLoading, requests, getAdditionalRequests, listHeaderTitle, listHeaderTitleButton }) {
-  const classes = useStyles();
+const RequestList = ({ isLoading, requests, getAdditionalRequests, listHeaderTitle, listHeaderTitleButton }) => {
   return (
-    <div className={classes.listRoot}>
+    <div>
       {isLoading ?
-        <div className={classes.loader}>
+        <div>
           <CircularProgress size={25} />
         </div>
         :
@@ -48,9 +21,7 @@ export default function RequestList({ isLoading, requests, getAdditionalRequests
           {requests.map(request => (
             <RequestItem request={request} />
           ))}
-          <ListItem
-            key='loadmore'
-          >
+          <ListItem key='loadmore'>
             <ListItemText
               primary={
                 <Button onClick={() => getAdditionalRequests()}> More </Button>
@@ -69,26 +40,51 @@ function RequestItem({ request }) {
     const yyyy = `${date.getFullYear()}`;
     const MM = `0${date.getMonth() + 1}`.slice(-2);
     const dd = `0${date.getDate()}`.slice(-2);
-  
+
     return `${yyyy}/${MM}/${dd}`;
+  }
+  const getLink = (name) => {
+    return '../' + name;
   }
 
   return (
-    <ListItem alignItems='flex-start' key={request.id}>
-      <ListItemText
-        primary={
-          <React.Fragment>
-            {request.owner}/
-            {request.area}/
-            {request.cost}/
-            {request.date}/
-            {request.days}/
-            {request.number}/
-            {request.context}/
-            {timestampToTime(request.timestamp)}
-          </React.Fragment>
-        }
-      />
+    <ListItem alignItems='flex-start' key={UUID.generate()}>
+      <table>
+        <tr>
+          <th>Name</th>
+          <tr><Link to={getLink(request.owner)}>{request.owner}</Link></tr>
+        </tr>
+        <tr>
+          <th>Area</th>
+          <tr>{request.area}</tr>
+        </tr>
+        <tr>
+          <th>Cost</th>
+          <tr>{request.cost}</tr>
+        </tr>
+        <tr>
+          <th>Data</th>
+          <tr>{request.date}</tr>
+        </tr>
+        <tr>
+          <th>Days</th>
+          <tr>{request.date}</tr>
+        </tr>
+        <tr>
+          <th>Number</th>
+          <tr>{request.number}</tr>
+        </tr>
+        <tr>
+          <th>Message</th>
+          <tr>{request.context}</tr>
+        </tr>
+        <tr>
+          <th>Requested At</th>
+          <tr>{timestampToTime(request.timestamp)}</tr>
+        </tr>
+      </table>
     </ListItem>
-  )
+  );
 }
+
+export default withRouter(RequestList);

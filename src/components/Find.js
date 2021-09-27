@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import { withRouter } from 'react-router';
 import {API, graphqlOperation } from 'aws-amplify';
-import { listAgentBySpecificArea, listAgentBySpecificOwner } from '../graphql/queries';
+import { listAgentBySpecificArea } from '../graphql/queries';
 import FindList from './FindList';
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
@@ -28,7 +29,6 @@ const Find = (props) => {
 
   const getAgent = async (type, nextToken = null) => {
     if (props.area !== null) {
-      console.log('Called')
       res = await API.graphql(
         graphqlOperation(listAgentBySpecificArea, {
           area: props.area,
@@ -38,7 +38,6 @@ const Find = (props) => {
           }
         )
       );
-      console.log('hit agents', res.data.listAgentBySpecificArea);
       dispatch({ type: type, agents: res.data.listAgentBySpecificArea.items });
       setNextToken(res.data.listAgentBySpecificArea.nextToken);
     }
@@ -51,14 +50,13 @@ const Find = (props) => {
   }
 
   useEffect(() => {
-    console.log('Go', props);
     getAgent(INITIAL_QUERY);
-    console.log('Went', props);
   }, []);
 
 
   return (
     <React.Fragment>
+      <h2>Agents Find in {props.area}</h2>
       <FindList
         isLoading={isLoading}
         agents={agents}
@@ -68,4 +66,4 @@ const Find = (props) => {
   )
 }
 
-export default Find;
+export default withRouter(Find);
