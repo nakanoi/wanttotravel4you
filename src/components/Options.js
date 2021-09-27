@@ -188,7 +188,20 @@ export const GENRE_OPTIONS = [
   { value: 'グルメ', label: 'グルメ' },
   { value: '一人旅', label: '一人旅' },
   { value: '温泉', label: '温泉' },
-  { value: 'ウォーターアクティビティ', label: 'ウォーターアクティビティ' },
+  { value: 'アクティビティ', label: 'アクティビティ' },
   { value: '世界遺産', label: '世界遺産' }
 ]
 
+export const BUSINESS_OPTIONS = [
+  { value: '宿泊', label: '宿泊' },
+  { value: '旅行会社', label: '旅行会社' },
+  { value: '交通', label: '交通' },
+  { value: '商店', label: '商店' },
+  { value: '自治体', label: '自治体' },
+  { value: 'ガイド', label: 'ガイド' },
+  { value: '翻訳', label: '翻訳' },
+  { value: 'アクティビティ', label: 'アクティビティ' },
+  { value: 'オーナー', label: 'オーナー' },
+  { value: '個人', label: '個人' },
+  { value: 'その他', label: 'その他' }
+]

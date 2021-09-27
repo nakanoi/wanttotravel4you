@@ -94,6 +94,28 @@ export const createRequest = /* GraphQL */ `
     }
   }
 `;
+export const updateRequest = /* GraphQL */ `
+  mutation UpdateRequest(
+    $input: UpdateRequestInput!
+    $condition: ModelRequestConditionInput
+  ) {
+    updateRequest(input: $input, condition: $condition) {
+      type
+      id
+      area
+      cost
+      number
+      date
+      days
+      genre
+      range
+      context
+      status
+      owner
+      timestamp
+    }
+  }
+`;
 export const deleteRequest = /* GraphQL */ `
   mutation DeleteRequest(
     $input: DeleteRequestInput!
