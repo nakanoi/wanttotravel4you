@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import {API, graphqlOperation } from 'aws-amplify';
-import { useParams } from 'react-router';
-import { listRequestBySpecificOwner } from '../graphql/queries';
+import { listRequestBySpecificArea } from '../graphql/queries';
 import { onCreateRequest } from '../graphql/subscriptions'
 import RequestList from './RequestList';
 
@@ -22,25 +21,24 @@ const reducer = (state, action) => {
   }
 };
 
-const AllRequest = () => {
-  const { userID } = useParams();
-
+const AgentRequest = (props) => {
   const [requests, dispatch] = useReducer(reducer, []);
   const [nextToken, setNextToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const getRequest = async (type, nextToken = null) => {
-    const res = await API.graphql(
-      graphqlOperation(listRequestBySpecificOwner, {
-        owner: userID,
-        sortDirection: 'DESC',
-        limit: 10,
-        nextToken: nextToken,
-      }
-    ));
-    console.log(res.data.listRequestBySpecificOwner.items)
-    dispatch({ type: type, requests: res.data.listRequestBySpecificOwner.items })
-    setNextToken(res.data.listRequestBySpecificOwner.nextToken);
+    if (props.area !== null) {
+      const res = await API.graphql(
+        graphqlOperation(listRequestBySpecificArea, {
+          area: props.area,
+          sortDirection: 'DESC',
+          limit: 20,
+          nextToken: nextToken,
+        }
+      ));
+      dispatch({ type: type, requests: res.data.listRequestBySpecificArea.items })
+      setNextToken(res.data.listRequestBySpecificArea.nextToken);
+    }
     setIsLoading(false);
   }
 
@@ -48,7 +46,6 @@ const AllRequest = () => {
     if (nextToken === null) return;
     getRequest(ADDITIONAL_QUERY, nextToken);
   }
-
 
   useEffect(() => {
     getRequest(INITIAL_QUERY);
@@ -59,7 +56,6 @@ const AllRequest = () => {
     ).subscribe({
       next: (msg) => {
         const request = msg.value.data.onCreateRequest;
-        if (request.owner !== userID) return;
         dispatch({ type: SUBSCRIPTION, requests: requests });
       }
     });
@@ -73,10 +69,9 @@ const AllRequest = () => {
         isLoading={isLoading}
         requests={requests}
         getAdditionalRequests={getAdditionalRequests}
-        listHeaderTitle={userID}
       />
     </React.Fragment>
   )
 }
 
-export default AllRequest;
+export default AgentRequest;

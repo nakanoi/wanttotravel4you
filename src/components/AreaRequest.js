@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
 import {API, graphqlOperation } from 'aws-amplify';
 import { useParams } from 'react-router';
-import { listRequestBySpecificOwner } from '../graphql/queries';
+import { listRequestBySpecificArea } from '../graphql/queries';
 import { onCreateRequest } from '../graphql/subscriptions'
 import RequestList from './RequestList';
 
@@ -31,7 +31,7 @@ const AllRequest = () => {
 
   const getRequest = async (type, nextToken = null) => {
     const res = await API.graphql(
-      graphqlOperation(listRequestBySpecificOwner, {
+      graphqlOperation(listRequestBySpecificArea, {
         owner: userID,
         sortDirection: 'DESC',
         limit: 10,
@@ -49,7 +49,6 @@ const AllRequest = () => {
     getRequest(ADDITIONAL_QUERY, nextToken);
   }
 
-
   useEffect(() => {
     getRequest(INITIAL_QUERY);
 
@@ -65,7 +64,6 @@ const AllRequest = () => {
     });
     return () => subscription.unsubscribe();
   }, []);
-
 
   return (
     <React.Fragment>

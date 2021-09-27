@@ -76,6 +76,25 @@ export const onCreateRequest = /* GraphQL */ `
     }
   }
 `;
+export const onUpdateRequest = /* GraphQL */ `
+  subscription OnUpdateRequest {
+    onUpdateRequest {
+      type
+      id
+      area
+      cost
+      number
+      date
+      days
+      genre
+      range
+      context
+      status
+      owner
+      timestamp
+    }
+  }
+`;
 export const onDeleteRequest = /* GraphQL */ `
   subscription OnDeleteRequest {
     onDeleteRequest {
