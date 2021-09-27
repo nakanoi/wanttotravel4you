@@ -8,12 +8,12 @@ import {
   TextField,
   InputAdornment
 } from '@material-ui/core';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
-import Select from 'react-select'
-import UUID from 'uuidjs'
-import { createRequest } from '../graphql/mutations'
-import * as options from './RequestOptions'
+import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
+import Select from 'react-select';
+import UUID from 'uuidjs';
+import { createRequest } from '../graphql/mutations';
+import * as options from './Options';
 
 const Request = () => {
   const [area, SetArea] = useState('');
@@ -25,19 +25,19 @@ const Request = () => {
   const [range, SetRange] = useState(0);
   const [context, SetContext] = useState('');
   const [status, SetStatus] = useState('running');
-  const [tags, SetTags] = useState([])
+  const [tags, SetTags] = useState([]);
 
   const sendRequest = async () => {
     function ZP(num,length){
       return ('0000000' + num).slice(-length);
     }
     var format = date.getFullYear() + '-' + ZP(date.getMonth() + 1, 2) + '-' + ZP(date.getDay(), 2)
-    const postID = UUID.generate()
+    const requestID = UUID.generate();
     const res = await API.graphql(
       graphqlOperation(createRequest, {
         input: {
-          type: "post",
-          id: postID,
+          type: "request",
+          id: requestID,
           area: area,
           cost: Number(cost),
           number: Number(number),
@@ -64,7 +64,7 @@ const Request = () => {
     SetTags([])
   }
 
-  // Handers
+  // Handlers
   const handleArea = event => {
     SetArea(event.value);
   }
@@ -95,7 +95,7 @@ const Request = () => {
 
   return (
     <List>
-      <ListItem key='post-input-field'>
+      <ListItem key='request_area'>
         <div>DESCRIPTION</div>
         <Select
           id="area"
@@ -103,7 +103,7 @@ const Request = () => {
           options={options.AREA_OPTIONS}
         />
       </ListItem>
-      <ListItem key='post-input-field'>
+      <ListItem key='request_cost'>
         <ListItemText primary={
           <TextField
             id="cost"
@@ -118,7 +118,7 @@ const Request = () => {
           />
         } />
       </ListItem>
-      <ListItem key='post-input-field'>
+      <ListItem key='request_number'>
         <ListItemText primary={
           <TextField
             id="number"
@@ -133,7 +133,7 @@ const Request = () => {
           />
         } />
       </ListItem>
-      <ListItem key='post-input-field'>
+      <ListItem key='request_date'>
         <div>DEPARTURE</div>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <KeyboardDatePicker
@@ -142,7 +142,7 @@ const Request = () => {
           />
         </MuiPickersUtilsProvider>
       </ListItem>
-      <ListItem key='post-input-field'>
+      <ListItem key='request_days'>
         <ListItemText primary={
           <TextField
             id="days"
@@ -158,7 +158,7 @@ const Request = () => {
           />
         } />
       </ListItem>
-      <ListItem key='post-input-field'>
+      <ListItem key='request_genre'>
         <div>GENRE</div>
         <Select
           id="genre"
@@ -167,7 +167,7 @@ const Request = () => {
           options={options.GENRE_OPTIONS}
         />
       </ListItem>
-      <ListItem key='post-input-field'>
+      <ListItem key='request_range'>
         <ListItemText primary={
           <TextField
             id="range"
@@ -182,7 +182,7 @@ const Request = () => {
           />
         } />
       </ListItem>
-      <ListItem key='post-input-field'>
+      <ListItem key='request_context'>
         <ListItemText primary={
           <TextField
             id="context"
@@ -196,7 +196,7 @@ const Request = () => {
           />
         } />
       </ListItem>
-      <ListItem key='post-button'>
+      <ListItem key='request-button'>
         <ListItemText primary={
           <Button
             variant="contained"

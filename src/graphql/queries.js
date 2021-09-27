@@ -247,3 +247,140 @@ export const listAgentBySpecificOwner = /* GraphQL */ `
     }
   }
 `;
+export const listAgentBySpecificArea = /* GraphQL */ `
+  query ListAgentBySpecificArea(
+    $area: String
+    $timestamp: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelAgentFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAgentBySpecificArea(
+      area: $area
+      timestamp: $timestamp
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        business
+        area
+        owner
+        timestamp
+      }
+      nextToken
+    }
+  }
+`;
+export const listRequestByTimestamp = /* GraphQL */ `
+  query ListRequestByTimestamp(
+    $type: String
+    $timestamp: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelRequestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRequestByTimestamp(
+      type: $type
+      timestamp: $timestamp
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        area
+        cost
+        number
+        date
+        days
+        genre
+        range
+        context
+        status
+        owner
+        timestamp
+      }
+      nextToken
+    }
+  }
+`;
+export const listRequestBySpecificOwner = /* GraphQL */ `
+  query ListRequestBySpecificOwner(
+    $owner: String
+    $timestamp: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelRequestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRequestBySpecificOwner(
+      owner: $owner
+      timestamp: $timestamp
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        area
+        cost
+        number
+        date
+        days
+        genre
+        range
+        context
+        status
+        owner
+        timestamp
+      }
+      nextToken
+    }
+  }
+`;
+export const listRequestBySpecificArea = /* GraphQL */ `
+  query ListRequestBySpecificArea(
+    $area: String
+    $timestamp: ModelIntKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelRequestFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listRequestBySpecificArea(
+      area: $area
+      timestamp: $timestamp
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        type
+        id
+        area
+        cost
+        number
+        date
+        days
+        genre
+        range
+        context
+        status
+        owner
+        timestamp
+      }
+      nextToken
+    }
+  }
+`;
