@@ -6,8 +6,72 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+ul, ol {
+  list-style: none;
+}
+
+header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+a {
+  text-decoration: none;
+}
+
+:root {
+  --amplify-primary-color: #fc7963;
+  --amplify-primary-tint: #ff7359;
+  --amplify-primary-shade: #e0573e;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+
+/* header */
+header {
+  height: 80px;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+header nav {
+  padding: 0 4em;
+}
+header ul{
+  display: flex;
+}
+
+header ul li{
+  margin: 0 1em;
+}
+
+/* content */
+.content-flex-wrap {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: 80px auto 0;
+}
+
+/* profile */
+.profile {
+  width: 30%;
+}
+.profile-table th {
+  text-align: left;
+}
+
+/* content(router) */
+.content-flex {
+  width: 65%;
+}
+
+/* analysis */
+.analysis-flex {
+  display: block!important;
 }

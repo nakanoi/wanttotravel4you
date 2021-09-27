@@ -38,7 +38,6 @@ const AllRequest = () => {
         nextToken: nextToken,
       }
     ));
-    console.log(res.data.listRequestBySpecificOwner.items)
     dispatch({ type: type, requests: res.data.listRequestBySpecificOwner.items })
     setNextToken(res.data.listRequestBySpecificOwner.nextToken);
     setIsLoading(false);

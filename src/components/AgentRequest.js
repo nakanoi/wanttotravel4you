@@ -65,6 +65,7 @@ const AgentRequest = (props) => {
 
   return (
     <React.Fragment>
+      <h2>All Requests in {props.area}</h2>
       <RequestList
         isLoading={isLoading}
         requests={requests}

@@ -45,7 +45,6 @@ const Type = (props) => {
           }
         )
       );
-      console.log('RESTOURIST', res);
       if (res.data.listTouristBySpecificOwner == null) {
         SetType(null);
       } else {
@@ -67,7 +66,6 @@ const Type = (props) => {
           }
         )
       );
-      console.log('RESAGENT', res);
       if (res.data.listAgentBySpecificOwner == null) {
         SetType(null);
       } else {
