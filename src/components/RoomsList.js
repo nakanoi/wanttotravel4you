@@ -38,19 +38,19 @@ const RoomsList = ({ isLoading, rooms, getAdditionalRooms }) => {
 }
 
 const RoomItem = ({ room }) => {
-  const roomURL = (roomID) => {
-    return '../message/' + String(roomID)
+  const roomURL = () => {
+    return '../message/' + room.id;
   }
-  if (room === null) {
+  if (room) {
     return (
-      <ListItem key={UUID.generate()}></ListItem>
+      <ListItem key={UUID.generate()}>
+      <Link to={roomURL()}>Go To Message Room</Link>
+        <p>{ room.roomTitle }</p>
+      </ListItem>
     )
   } else {
     return (
-      <ListItem key={UUID.generate()}>
-      <Link to={roomURL(room.roomID)}>Go To Message Room</Link>
-        <p>{ room.roomTitle }</p>
-      </ListItem>
+      <ListItem key={UUID.generate()}></ListItem>
     )
   }
 }

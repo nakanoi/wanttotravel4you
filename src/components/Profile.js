@@ -56,8 +56,8 @@ const Profile = ({ user, usertype, area, business }) => {
       graphqlOperation(onCreateRoom)
     ).subscribe({
       next: (msg) => {
-        const rooms = msg.value.data.onCreateRoom;
-        dispatch({ type: SUBSCRIPTION, room: rooms });
+        const room = msg.value.data.onCreateRoom;
+        dispatch({ type: SUBSCRIPTION, room: room });
       }
     });
     return () => subscription.unsubscribe();
