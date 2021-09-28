@@ -1,62 +1,31 @@
-import React from 'react';
-
-import { makeStyles } from '@material-ui/core/styles';
+import React, { Fragment } from 'react';
 import {
-  Button,
   List,
   ListItem,
-  ListItemText,
   CircularProgress,
 } from '@material-ui/core';
 import UUID from 'uuidjs';
 
-const useStyles = makeStyles(theme => ({
-  listRoot: {
-    width: '100%',
-    wordBreak: 'break-all',
-    overflow: 'scroll',
-    borderRight: '1px solid #37444C',
-  },
-  alignCenter: {
-    textAlign: 'center',
-  },
-  loader: {
-    textAlign: 'center',
-    paddingTop: 20,
-  },
-  listHeader: {
-    position: 'sticky',
-    top: 0,
-    zIndex: 1200,
-    backgroundColor: '#15202B',
-    borderBottom: '1px solid #37444C',
-  },
-  clickable: {
-    cursor: 'pointer',
-  }
-}));
-
-export default function AnalysisList({ isLoading, requests, getAdditionalRequests }) {
-  const classes = useStyles();
+const AnalysisList = ({ isLoading, genre, unitGenre, days, unitDays, number, unitNumber }) => {
   return (
-    <div className={classes.listRoot}>
+    <div>
       {isLoading ?
-        <div className={classes.loader}>
+        <div>
           <CircularProgress size={25} />
         </div>
         :
         <List disablePadding>
-          {requests.map(request => (
-            <AnalysisItem request={request} />
-          ))}
-          <ListItem
-            key={UUID.generate()}
-          >
-            <ListItemText
-              primary={
-                <Button onClick={() => getAdditionalRequests()}>More </Button>
-              }
-            />
+          <h3>Genre</h3>
+          <ListItem key={UUID.generate()}>
+            <DataList data={genre} unit={unitGenre} />
+          </ListItem>
+          <h3>Stay Days</h3>
+          <ListItem key={UUID.generate()}>
+            <DataList data={days} unit={unitDays} />
+          </ListItem>
+          <h3>Brings</h3>
+          <ListItem key={UUID.generate()}>
+            <DataList data={number} unit={unitNumber} />
           </ListItem>
         </List>
       }
@@ -64,32 +33,49 @@ export default function AnalysisList({ isLoading, requests, getAdditionalRequest
   )
 }
 
-function AnalysisItem({ request }) {
-  const timestampToTime = (timestamp) => {
-    const date = new Date(timestamp * 1000);
-    const yyyy = `${date.getFullYear()}`;
-    const MM = `0${date.getMonth() + 1}`.slice(-2);
-    const dd = `0${date.getDate()}`.slice(-2);
-  
-    return `${yyyy}/${MM}/${dd}`;
-  }
-
+const DataList = ({ data, unit }) => {
+  var count = {count: data[0].count, update: true}
+  var rank = 0;
   return (
-    <ListItem alignItems='flex-start' key={UUID.generate()}>
-      <ListItemText
-        primary={
-          <React.Fragment>
-            {request.owner}/
-            {request.area}/
-            {request.cost}/
-            {request.date}/
-            {request.days}/
-            {request.number}/
-            {request.context}/
-            {timestampToTime(request.timestamp)}
-          </React.Fragment>
-        }
-      />
-    </ListItem>
+    <Fragment>
+      <List className="analysis-flex">
+        {Object.keys(data).map(key => {
+          if (data[key].count !== count) {
+            count = data[key].count;
+            rank += 1;
+          }
+          return (
+            <ListItem alignItems='flex-start' key={UUID.generate()}>
+              <AnalysisItem rank={rank} item={data[key]} unit={unit} />
+            </ListItem>
+          )
+        })}
+      </List>
+    </Fragment>
   )
 }
+
+const AnalysisItem = ({ rank, item, unit }) => {
+  return (
+    <Fragment>
+      <table>
+        <tbody>
+          <tr>
+            <th>No.</th>
+            <td>{rank}</td>
+          </tr>
+          <tr>
+            <th>Name</th>
+            <td>{item.key}{unit}</td>
+          </tr>
+          <tr>
+            <th>Count</th>
+            <td>{item.count}</td>
+          </tr>
+        </tbody>
+      </table>
+    </Fragment>
+  )
+}
+
+export default AnalysisList;

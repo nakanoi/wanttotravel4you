@@ -80,6 +80,7 @@ export const createRequest = /* GraphQL */ `
     createRequest(input: $input, condition: $condition) {
       type
       id
+      title
       area
       cost
       number
@@ -102,6 +103,7 @@ export const updateRequest = /* GraphQL */ `
     updateRequest(input: $input, condition: $condition) {
       type
       id
+      title
       area
       cost
       number
@@ -124,6 +126,7 @@ export const deleteRequest = /* GraphQL */ `
     deleteRequest(input: $input, condition: $condition) {
       type
       id
+      title
       area
       cost
       number
@@ -165,6 +168,102 @@ export const deleteTag = /* GraphQL */ `
       tag
       owner
       timestamp
+    }
+  }
+`;
+export const createRoom = /* GraphQL */ `
+  mutation CreateRoom(
+    $input: CreateRoomInput!
+    $condition: ModelRoomConditionInput
+  ) {
+    createRoom(input: $input, condition: $condition) {
+      type
+      id
+      requestID
+      requestUser
+      roomTitle
+      timestamp
+      owner
+    }
+  }
+`;
+export const deleteRoom = /* GraphQL */ `
+  mutation DeleteRoom(
+    $input: DeleteRoomInput!
+    $condition: ModelRoomConditionInput
+  ) {
+    deleteRoom(input: $input, condition: $condition) {
+      type
+      id
+      requestID
+      requestUser
+      roomTitle
+      timestamp
+      owner
+    }
+  }
+`;
+export const createMessage = /* GraphQL */ `
+  mutation CreateMessage(
+    $input: CreateMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    createMessage(input: $input, condition: $condition) {
+      type
+      id
+      roomID
+      userID
+      context
+      timestamp
+      owner
+    }
+  }
+`;
+export const deleteMessage = /* GraphQL */ `
+  mutation DeleteMessage(
+    $input: DeleteMessageInput!
+    $condition: ModelMessageConditionInput
+  ) {
+    deleteMessage(input: $input, condition: $condition) {
+      type
+      id
+      roomID
+      userID
+      context
+      timestamp
+      owner
+    }
+  }
+`;
+export const createMember = /* GraphQL */ `
+  mutation CreateMember(
+    $input: CreateMemberInput!
+    $condition: ModelMemberConditionInput
+  ) {
+    createMember(input: $input, condition: $condition) {
+      type
+      id
+      roomID
+      roomTitle
+      userID
+      timestamp
+      owner
+    }
+  }
+`;
+export const deleteMember = /* GraphQL */ `
+  mutation DeleteMember(
+    $input: DeleteMemberInput!
+    $condition: ModelMemberConditionInput
+  ) {
+    deleteMember(input: $input, condition: $condition) {
+      type
+      id
+      roomID
+      roomTitle
+      userID
+      timestamp
+      owner
     }
   }
 `;

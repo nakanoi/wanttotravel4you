@@ -16,6 +16,7 @@ import { createRequest } from '../graphql/mutations';
 import * as options from './Options';
 
 const Request = () => {
+  const [title, SetTitle] = useState('');
   const [area, SetArea] = useState('');
   const [cost, SetCost] = useState(0);
   const [number, SetNumber] = useState(0);
@@ -38,6 +39,7 @@ const Request = () => {
         input: {
           type: "request",
           id: requestID,
+          title: title,
           area: area,
           cost: Number(cost),
           number: Number(number),
@@ -51,7 +53,8 @@ const Request = () => {
         }
       })
     );
-    alert('Successfully Requested.')
+    alert('Successfully Requested.');
+    SetTitle('');
     SetArea('');
     SetCost(0);
     SetNumber(0);
@@ -65,6 +68,9 @@ const Request = () => {
   }
 
   // Handlers
+  const handleTitle = event => {
+    SetTitle(event.target.value);
+  }
   const handleArea = event => {
     SetArea(event.value);
   }
@@ -95,6 +101,20 @@ const Request = () => {
 
   return (
     <List>
+      <ListItem key='request_title'>
+        <ListItemText primary={
+        <TextField
+          id="context"
+          label="DETAILS"
+          multiline
+          rowsMax="8"
+          variant="filled"
+          value={title}
+          onChange={handleTitle}
+          margin="normal"
+        />
+      } />
+      </ListItem>
       <ListItem key='request_area'>
         <div>DESCRIPTION</div>
         <Select

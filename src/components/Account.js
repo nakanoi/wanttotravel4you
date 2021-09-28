@@ -25,8 +25,6 @@ const Account = () => {
 
   // UserType
   const getUserType = async () => {
-    console.log('GEEEEEEEET');
-    console.log(user);
     const res = await API.graphql(
       graphqlOperation(
         listTouristBySpecificOwner,

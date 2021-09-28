@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useReducer } from 'react';
-import {API, graphqlOperation } from 'aws-amplify';
+import { API, graphqlOperation } from 'aws-amplify';
 import { listRequestBySpecificArea } from '../graphql/queries';
 import { onCreateRequest } from '../graphql/subscriptions'
 import RequestList from './RequestList';
@@ -65,10 +65,12 @@ const AgentRequest = (props) => {
 
   return (
     <React.Fragment>
+      <h2>All Requests in {props.area}</h2>
       <RequestList
         isLoading={isLoading}
         requests={requests}
         getAdditionalRequests={getAdditionalRequests}
+        agent={props.username}
       />
     </React.Fragment>
   )

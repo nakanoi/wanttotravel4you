@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useReducer } from 'react';
+import { withRouter } from 'react-router';
 import {API, graphqlOperation } from 'aws-amplify';
-import { listAgentBySpecificArea, listAgentBySpecificOwner } from '../graphql/queries';
+import { listAgentBySpecificArea } from '../graphql/queries';
 import FindList from './FindList';
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
@@ -20,25 +21,23 @@ const reducer = (state, action) => {
   }
 };
 
-const Find = (props) => {
+const Find = ({ area, username }) => {
   const [agents, dispatch] = useReducer(reducer, []);
   const [nextToken, setNextToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   let res = null;
 
   const getAgent = async (type, nextToken = null) => {
-    if (props.area !== null) {
-      console.log('Called')
+    if (area !== null) {
       res = await API.graphql(
         graphqlOperation(listAgentBySpecificArea, {
-          area: props.area,
+          area: area,
           sortDirection: 'DESC',
           limit: 10,
           nextToken: nextToken,
           }
         )
       );
-      console.log('hit agents', res.data.listAgentBySpecificArea);
       dispatch({ type: type, agents: res.data.listAgentBySpecificArea.items });
       setNextToken(res.data.listAgentBySpecificArea.nextToken);
     }
@@ -51,21 +50,21 @@ const Find = (props) => {
   }
 
   useEffect(() => {
-    console.log('Go', props);
     getAgent(INITIAL_QUERY);
-    console.log('Went', props);
   }, []);
 
 
   return (
     <React.Fragment>
+      <h2>Agents Find in {area}</h2>
       <FindList
         isLoading={isLoading}
         agents={agents}
         getAdditionalAgents={getAdditionalAgents}
+        username={username}
       />
     </React.Fragment>
   )
 }
 
-export default Find;
+export default withRouter(Find);
