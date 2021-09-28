@@ -1,6 +1,68 @@
-import React from "react";
+import React, { useState, useReducer, useEffect } from "react";
+import { API, graphqlOperation } from 'aws-amplify';
+import { listMemberByUserIDinTimestamp } from "../graphql/queries";
+import { onCreateRoom } from "../graphql/subscriptions";
+import RoomsList from "./RoomsList";
 
-const Profile = ({ user, type, area, business }) => {
+const SUBSCRIPTION = 'SUBSCRIPTION';
+const INITIAL_QUERY = 'INITIAL_QUERY';
+const ADDITIONAL_QUERY = 'ADDITIONAL_QUERY';
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case INITIAL_QUERY:
+      return action.rooms;
+    case ADDITIONAL_QUERY:
+      return [...state, ...action.rooms]
+    case SUBSCRIPTION:
+      return [action.room, ...state]
+    default:
+      return state;
+  }
+};
+
+const Profile = ({ user, usertype, area, business }) => {
+  const [rooms, dispatch] = useReducer(reducer, []);
+  const [nextToken, setNextToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const getRooms = async (type, nextToken = null) => {
+    if (user.username !== null) {
+      const res = await API.graphql(
+        graphqlOperation(listMemberByUserIDinTimestamp, {
+          userID: user.username,
+          sortDirection: 'DESC',
+          limit: 20,
+          nextToken: nextToken,
+        }
+      ));
+      if (res.data.listMemberByUserIDinTimestamp !== null) {
+        dispatch({ type: type, rooms: res.data.listMemberByUserIDinTimestamp.items })
+        setNextToken(res.data.listMemberByUserIDinTimestamp.nextToken);
+      }
+    }
+    setIsLoading(false);
+  }
+
+  const getAdditionalRooms = () => {
+    if (nextToken === null) return;
+    getRooms(ADDITIONAL_QUERY, nextToken);
+  }
+
+  useEffect(() => {
+    getRooms(INITIAL_QUERY);
+
+    const subscription = API.graphql(
+      graphqlOperation(onCreateRoom)
+    ).subscribe({
+      next: (msg) => {
+        const rooms = msg.value.data.onCreateRoom;
+        dispatch({ type: SUBSCRIPTION, room: rooms });
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, []);
+
   return (
     <React.Fragment>
       <table className="profile-table">
@@ -11,10 +73,10 @@ const Profile = ({ user, type, area, business }) => {
               <td>{ user.username }</td>
             </tr>
           )}
-          {type !== null && (
+          {usertype !== null && (
             <tr>
               <th>Type</th>
-              <td>{ type }</td>
+              <td>{ usertype }</td>
             </tr>
           )}
           {area !== null && (
@@ -31,6 +93,11 @@ const Profile = ({ user, type, area, business }) => {
           )}
         </tbody>
       </table>
+      <RoomsList
+        isLoading={isLoading}
+        rooms={rooms}
+        getAdditionalRooms={getAdditionalRooms}
+      />
     </React.Fragment>
   );
 }

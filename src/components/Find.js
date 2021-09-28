@@ -21,17 +21,17 @@ const reducer = (state, action) => {
   }
 };
 
-const Find = (props) => {
+const Find = ({ area, username }) => {
   const [agents, dispatch] = useReducer(reducer, []);
   const [nextToken, setNextToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   let res = null;
 
   const getAgent = async (type, nextToken = null) => {
-    if (props.area !== null) {
+    if (area !== null) {
       res = await API.graphql(
         graphqlOperation(listAgentBySpecificArea, {
-          area: props.area,
+          area: area,
           sortDirection: 'DESC',
           limit: 10,
           nextToken: nextToken,
@@ -56,11 +56,12 @@ const Find = (props) => {
 
   return (
     <React.Fragment>
-      <h2>Agents Find in {props.area}</h2>
+      <h2>Agents Find in {area}</h2>
       <FindList
         isLoading={isLoading}
         agents={agents}
         getAdditionalAgents={getAdditionalAgents}
+        username={username}
       />
     </React.Fragment>
   )
