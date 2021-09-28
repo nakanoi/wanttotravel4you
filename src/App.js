@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import {BrowserRouter as Router, Switch, Route, Redirect, Link } from "react-router-dom"
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from "react-router-dom"
 import Amplify, { API, graphqlOperation } from 'aws-amplify';
 import { AmplifyAuthenticator, AmplifySignUp, AmplifySignOut, withAuthenticator } from '@aws-amplify/ui-react';
 import { AuthState, onAuthUIStateChange } from '@aws-amplify/ui-components';
@@ -17,7 +17,8 @@ import Analysis from './components//Analysis';
 import AllRequest from './components/AllRequest';
 import Find from './components/Find';
 import AgentRequest from './components/AgentRequest';
-import Profile from './components/Profile'
+import Profile from './components/Profile';
+import Message from './components/Message'
 import { createTourist, createAgent, updateAgent } from './graphql/mutations'
 import { listTouristBySpecificOwner, listAgentBySpecificOwner } from './graphql/queries';
 Amplify.configure(awsmobile);
@@ -48,8 +49,8 @@ const App = () => {
       touristCounter(1);
       const res = await API.graphql(
         graphqlOperation(listTouristBySpecificOwner, {
-            owner: user.username
-          }
+          owner: user.username
+        }
         )
       );
       var info = res.data.listTouristBySpecificOwner;
@@ -61,8 +62,8 @@ const App = () => {
       agentCounter(1);
       const res = await API.graphql(
         graphqlOperation(listAgentBySpecificOwner, {
-            owner: user.username
-          }
+          owner: user.username
+        }
         )
       );
       var info = res.data.listAgentBySpecificOwner;
@@ -127,39 +128,38 @@ const App = () => {
     getTouristType();
     getAgentType();
   }, [user]);
-  console.log(authState === AuthState.SignedIn, user );
 
   return authState === AuthState.SignedIn && user ? (
     <div>
       {type === null ? (
         <div>
-          <div className="content-flex-wrap">
-            <div className="profile">
-              <Profile user={ user } type={ null } area={ null } business={ null } />
-              <AmplifySignOut />
-              <List>
-                <ListItem>
-                  <ListItemText primary={
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={registerTourist}
-                    >Tourist</Button>
-                  } />
-                </ListItem>
-                <ListItem>
-                  <ListItemText primary={
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={registerAgent}
-                    >Agent</Button>
-                  } />
-                </ListItem>
-              </List>
-            </div>
-            <div className="content-flex">
-              <Router>
+          <Router>
+            <div className="content-flex-wrap">
+              <div className="profile">
+                <Profile user={user} usertype={null} area={null} business={null} />
+                <AmplifySignOut />
+                <List>
+                  <ListItem>
+                    <ListItemText primary={
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={registerTourist}
+                      >Tourist</Button>
+                    } />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText primary={
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={registerAgent}
+                      >Agent</Button>
+                    } />
+                  </ListItem>
+                </List>
+              </div>
+              <div className="content-flex">
                 <header>
                   <nav>
                     <ul>
@@ -169,14 +169,14 @@ const App = () => {
                   </nav>
                 </header>
                 <Switch>
-                  <Route path="/" exact render={({match}) => <Home match={match} type={type} area={agentArea} />} />
+                  <Route path="/" exact render={({ match }) => <Home match={match} type={type} area={agentArea} />} />
                   <Route path="/services/" exact component={Services} />
                   <Route path="/:userID" exact component={AllRequest} />
                   <Redirect path="*" to="/" />
                 </Switch>
-              </Router>
+              </div>
             </div>
-          </div>
+          </Router>
         </div>
       ) : (
         <div>
@@ -185,13 +185,13 @@ const App = () => {
               <div>
                 {agentArea === null ? (
                   <div>
-                    <div className="content-flex-wrap">
-                      <div className="profile">
-                        <Profile user={ user } type={ type } area={ null } business={ null } />
-                        <AmplifySignOut />
-                      </div>
-                      <div className="content-flex">
-                        <Router>
+                    <Router>
+                      <div className="content-flex-wrap">
+                        <div className="profile">
+                          <Profile user={user} usertype={type} area={null} business={null} />
+                          <AmplifySignOut />
+                        </div>
+                        <div className="content-flex">
                           <header>
                             <nav>
                               <ul>
@@ -201,24 +201,24 @@ const App = () => {
                             </nav>
                           </header>
                           <Switch>
-                            <Route path="/" exact render={({match}) => <Home match={match} type={type} area={agentArea} />} />
+                            <Route path="/" exact render={({ match }) => <Home match={match} type={type} area={agentArea} />} />
                             <Route path="/services/" exact component={Services} />
                             <Route path="/:userID" exact component={AllRequest} />
                             <Redirect path="*" to="/" />
                           </Switch>
-                        </Router>
+                        </div>
                       </div>
-                    </div>
+                    </Router>
                   </div>
                 ) : (
                   <div>
-                    <div className="content-flex-wrap">
-                      <div className="profile">
-                        <Profile user={ user } type={ type } area={ agentArea } business={ business } />
-                        <AmplifySignOut />
-                      </div>
-                      <div className="content-flex">
-                        <Router>
+                    <Router>
+                      <div className="content-flex-wrap">
+                        <div className="profile">
+                          <Profile user={user} usertype={type} area={agentArea} business={business} />
+                          <AmplifySignOut />
+                        </div>
+                        <div className="content-flex">
                           <header>
                             <nav>
                               <ul>
@@ -231,56 +231,57 @@ const App = () => {
                             </nav>
                           </header>
                           <Switch>
-                            <Route path="/" exact render={({match}) => <Home match={match} type={type} area={agentArea} />} />
+                            <Route path="/" exact render={({ match }) => <Home match={match} type={type} area={agentArea} />} />
                             <Route path="/services/" exact component={Services} />
-                            <Route path="/find/" exact render={({match}) => <Find match={match} area={agentArea} />} />
-                            <Route path="/requests/" exact render={({match}) => <AgentRequest match={match} area={agentArea} />} />
-                            <Route path="/analysis/" exact render={({match}) => <Analysis match={match} area={agentArea} />} />
+                            <Route path="/find/" exact render={({ match }) => <Find match={match} area={agentArea} username={user.username} />} />
+                            <Route path="/requests/" exact render={({ match }) => <AgentRequest match={match} area={agentArea} username={user.username} />} />
+                            <Route path="/analysis/" exact render={({ match }) => <Analysis match={match} area={agentArea} />} />
+                            <Route path="/message/:roomID" exact render={({ match }) => <Message match={match} username={user.username} />} />
                             <Route path="/:userID" exact component={AllRequest} />
                             <Redirect path="*" to="/" />
                           </Switch>
-                        </Router>
+                        </div>
                       </div>
-                    </div>
+                    </Router>
                   </div>
                 )}
               </div>
             ) : (
               <div>
-                <div className="content-flex-wrap">
-                  <div className="profile">
-                    <Profile user={ user } type={ type } area={ null } business={ null } />
-                    <AmplifySignOut />
-                    <List>
-                      <ListItem key='agent-field_area'>
-                        <div>Area</div>
-                        <Select
-                          id="area"
-                          onChange={handleArea}
-                          options={options.AREA_OPTIONS}
-                        />
-                      </ListItem>
-                      <ListItem key='pagent-field_business'>
-                        <div>Business</div>
-                        <Select
-                          id="business"
-                          onChange={handleBusiness}
-                          options={options.BUSINESS_OPTIONS}
-                        />
-                      </ListItem>
-                      <ListItem key='agent-button'>
-                        <ListItemText primary={
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={updateAgentInfo}
-                          >Register</Button>
-                        } />
-                      </ListItem>
-                    </List>
-                  </div>
-                  <div className="content-flex">
-                    <Router>
+                <Router>
+                  <div className="content-flex-wrap">
+                    <div className="profile">
+                      <Profile user={user} usertype={type} area={null} business={null} />
+                      <AmplifySignOut />
+                      <List>
+                        <ListItem key='agent-field_area'>
+                          <div>Area</div>
+                          <Select
+                            id="area"
+                            onChange={handleArea}
+                            options={options.AREA_OPTIONS}
+                          />
+                        </ListItem>
+                        <ListItem key='pagent-field_business'>
+                          <div>Business</div>
+                          <Select
+                            id="business"
+                            onChange={handleBusiness}
+                            options={options.BUSINESS_OPTIONS}
+                          />
+                        </ListItem>
+                        <ListItem key='agent-button'>
+                          <ListItemText primary={
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={updateAgentInfo}
+                            >Register</Button>
+                          } />
+                        </ListItem>
+                      </List>
+                    </div>
+                    <div className="content-flex">
                       <header>
                         <nav>
                           <ul>
@@ -290,25 +291,25 @@ const App = () => {
                         </nav>
                       </header>
                       <Switch>
-                        <Route path="/" exact render={({match}) => <Home match={match} type={type} area={agentArea} />} />
+                        <Route path="/" exact render={({ match }) => <Home match={match} type={type} area={agentArea} />} />
                         <Route path="/services/" exact component={Services} />
                         <Route path="/:userID" exact component={AllRequest} />
                         <Redirect path="*" to="/" />
                       </Switch>
-                    </Router>
+                    </div>
                   </div>
-                </div>
+                </Router>
               </div>
             ))
           ) : (
             <div>
-              <div className="content-flex-wrap">
-                <div className="profile">
-                  <Profile user={ user } type={ type } area={ null } business={ null } />
-                  <AmplifySignOut />
-                </div>
-                <div className="content-flex">
-                  <Router>
+              <Router>
+                <div className="content-flex-wrap">
+                  <div className="profile">
+                    <Profile user={user} usertype={type} area={null} business={null} />
+                    <AmplifySignOut />
+                  </div>
+                  <div className="content-flex">
                     <header>
                       <nav>
                         <ul>
@@ -319,15 +320,16 @@ const App = () => {
                       </nav>
                     </header>
                     <Switch>
-                      <Route path="/" exact render={({match}) => <Home match={match} type={type} area={agentArea} />} />
+                      <Route path="/" exact render={({ match }) => <Home match={match} type={type} area={agentArea} />} />
                       <Route path="/services/" exact component={Services} />
                       <Route path="/request/" exact component={Request} />
+                      <Route path="/message/:roomID" exact render={({ match }) => <Message match={match} username={user.username} />} />
                       <Route path="/:userID" exact component={AllRequest} />
                       <Redirect path="*" to="/" />
                     </Switch>
-                  </Router>
+                  </div>
                 </div>
-              </div>
+              </Router>
             </div>
           )}
         </div>
@@ -335,22 +337,21 @@ const App = () => {
     </div>
   ) : (
     <div>
-      {console.log('Top')}
-      <div className="content-flex-wrap">
-        <div className="profile">
-          <AmplifyAuthenticator>
-            <AmplifySignUp
-              slot="sign-up"
-              formFields={[
-                { type: "username" },
-                { type: "password" },
-                { type: "email" }
-              ]}
-            />
-          </AmplifyAuthenticator>
-        </div>
-        <div className="content-flex">
-          <Router>
+      <Router>
+        <div className="content-flex-wrap">
+          <div className="profile">
+            <AmplifyAuthenticator>
+              <AmplifySignUp
+                slot="sign-up"
+                formFields={[
+                  { type: "username" },
+                  { type: "password" },
+                  { type: "email" }
+                ]}
+              />
+            </AmplifyAuthenticator>
+          </div>
+          <div className="content-flex">
             <header>
               <nav>
                 <ul>
@@ -360,13 +361,13 @@ const App = () => {
               </nav>
             </header>
             <Switch>
-              <Route path="/" exact render={({match}) => <Home match={match} type={type} area={agentArea} />} />
+              <Route path="/" exact render={({ match }) => <Home match={match} type={type} area={agentArea} />} />
               <Route path="/services/" exact component={Services} />
               <Redirect path="*" to="/" />
             </Switch>
-          </Router>
+          </div>
         </div>
-      </div>
+      </Router>
     </div>
   );
 }

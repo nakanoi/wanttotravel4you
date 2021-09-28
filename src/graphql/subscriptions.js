@@ -62,6 +62,7 @@ export const onCreateRequest = /* GraphQL */ `
     onCreateRequest {
       type
       id
+      title
       area
       cost
       number
@@ -81,6 +82,7 @@ export const onUpdateRequest = /* GraphQL */ `
     onUpdateRequest {
       type
       id
+      title
       area
       cost
       number
@@ -100,6 +102,7 @@ export const onDeleteRequest = /* GraphQL */ `
     onDeleteRequest {
       type
       id
+      title
       area
       cost
       number
@@ -135,6 +138,84 @@ export const onDeleteTag = /* GraphQL */ `
       tag
       owner
       timestamp
+    }
+  }
+`;
+export const onCreateRoom = /* GraphQL */ `
+  subscription OnCreateRoom {
+    onCreateRoom {
+      type
+      id
+      requestID
+      requestUser
+      roomTitle
+      timestamp
+      owner
+    }
+  }
+`;
+export const onDeleteRoom = /* GraphQL */ `
+  subscription OnDeleteRoom {
+    onDeleteRoom {
+      type
+      id
+      requestID
+      requestUser
+      roomTitle
+      timestamp
+      owner
+    }
+  }
+`;
+export const onCreateMessage = /* GraphQL */ `
+  subscription OnCreateMessage {
+    onCreateMessage {
+      type
+      id
+      roomID
+      userID
+      context
+      timestamp
+      owner
+    }
+  }
+`;
+export const onDeleteMessage = /* GraphQL */ `
+  subscription OnDeleteMessage {
+    onDeleteMessage {
+      type
+      id
+      roomID
+      userID
+      context
+      timestamp
+      owner
+    }
+  }
+`;
+export const onCreateMember = /* GraphQL */ `
+  subscription OnCreateMember {
+    onCreateMember {
+      type
+      id
+      roomID
+      roomTitle
+      userID
+      timestamp
+      owner
+    }
+  }
+`;
+export const onDeleteMember = /* GraphQL */ `
+  subscription OnDeleteMember {
+    onDeleteMember {
+      type
+      id
+      roomID
+      roomTitle
+      userID
+      timestamp
+      owner
     }
   }
 `;

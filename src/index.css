@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #E0FFE0;
 }
 ul, ol {
   list-style: none;
@@ -38,6 +39,7 @@ header {
   position: fixed;
   top: 0;
   right: 0;
+  background-color: #E0FFE0;
 }
 header nav {
   padding: 0 4em;
