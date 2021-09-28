@@ -73,7 +73,6 @@ const Message = ({ username }) => {
   }
   const joinMember = () => {
     if (roomInfo) {
-      console.log(joinUser, params.roomID);
       API.graphql(
         graphqlOperation(createMember, {
           input: {
@@ -118,7 +117,6 @@ const Message = ({ username }) => {
       graphqlOperation(onCreateMessage)
     ).subscribe({
       next: (msg) => {
-        console.log('allposts subscription fired')
         const message = msg.value.data.onCreateMessage;
         dispatch({ type: SUBSCRIPTION, message: message });
       }
