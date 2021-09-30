@@ -19,6 +19,7 @@
     "react-router-dom": "~5.3.0",
     "react-scripts": "4.0.3",
     "react-select": "^5.0.0",
+    "tsparticles": "^1.35.2",
     "uuidjs": "^4.2.9"
   },
   "scripts": {

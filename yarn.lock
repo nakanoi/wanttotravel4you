@@ -14475,7 +14475,7 @@
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz"
   "version" "2.3.1"
 
-"tsparticles@^1.30.0":
+"tsparticles@^1.30.0", "tsparticles@^1.35.2":
   "integrity" "sha512-VYiSs07jRfrSeU10sWcjl8n+O/bSeM2uERhFXVFtZmdedh1w/vMXZWdgn+unjVfkz/vusQ5ZmDkLVmn8H5hIEA=="
   "resolved" "https://registry.npmjs.org/tsparticles/-/tsparticles-1.35.2.tgz"
   "version" "1.35.2"
