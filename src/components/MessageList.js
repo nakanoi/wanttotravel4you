@@ -11,21 +11,21 @@ import UUID from 'uuidjs';
 const MessageList = ({ isLoading, messages, getAdditionalMessages }) => {
   return (
     <React.Fragment>
-      <h3>Message</h3>
+      <h3>メッセージ</h3>
       <div>
         {isLoading ?
           <div>
             <CircularProgress size={25} />
           </div>
           :
-          <List disablePadding>
+          <List disablePadding className="message-list-wrap">
             {messages.map(message => (
               <MessageItem message={message} />
             ))}
             <ListItem key='loadmore'>
               <ListItemText
                 primary={
-                  <Button onClick={() => getAdditionalMessages()}> More </Button>
+                  <Button onClick={() => getAdditionalMessages()}>もっと見る</Button>
                 }
               />
             </ListItem>
@@ -54,9 +54,15 @@ const MessageItem = ({ message }) => {
   if (message) {
     return (
       <ListItem key={UUID.generate()}>
-        <div>{ message.context }</div>
-        <div>from { message.userID } || </div>
-        <div>{ date(message.timestamp) }</div>
+        <div className="message-list">
+          <div className="message-context">{ message.context }</div>
+          <div className="message-info">
+            <div className="message-info-wrap">
+              <p>{ message.userID }</p>
+              <p>{ date(message.timestamp) }</p>
+            </div>
+          </div>
+        </div>
       </ListItem>
     )
   } else {

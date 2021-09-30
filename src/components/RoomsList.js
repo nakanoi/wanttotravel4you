@@ -12,7 +12,7 @@ import UUID from 'uuidjs';
 const RoomsList = ({ isLoading, rooms, getAdditionalRooms }) => {
   return (
     <React.Fragment>
-      <h3>Rooms</h3>
+      <h3>チャット</h3>
       <div>
         {isLoading ?
           <div>
@@ -26,7 +26,7 @@ const RoomsList = ({ isLoading, rooms, getAdditionalRooms }) => {
             <ListItem key='loadmore'>
               <ListItemText
                 primary={
-                  <Button onClick={() => getAdditionalRooms()}> More </Button>
+                  <Button onClick={() => getAdditionalRooms()}>もっと見る</Button>
                 }
               />
             </ListItem>
@@ -44,8 +44,7 @@ const RoomItem = ({ room }) => {
   if (room) {
     return (
       <ListItem key={UUID.generate()}>
-      <Link to={roomURL()}>Go To Message Room</Link>
-        <p>{ room.roomTitle }</p>
+      <Link to={roomURL()}>"{ room.roomTitle }"のチャットルームへ行く</Link>
       </ListItem>
     )
   } else {

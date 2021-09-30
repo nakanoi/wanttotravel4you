@@ -3,35 +3,34 @@ import React from 'react';
 const Home = (props) => {
   return(
     <React.Fragment>
-      <h1>Want To Travel 4 You</h1>
+      <h2>Want To Travel 4 You</h2>
       {props.type === null ? (
         <React.Fragment>
           <section>
-            <h2>Please Login.</h2>
           </section>
         </React.Fragment>
       ) : (
         props.type === 'agent' ? (
           <React.Fragment>
-            <h2>How To use</h2>
+            <h3>ANALYSIS<small>地域の旅行者の傾向を分析</small></h3>
             <section>
             </section>
-            <h2>Analysis</h2>
+            <h3>FIND<small>地域の事業者を発掘</small></h3>
             <section>
             </section>
-            <h2>Find Agents Around You</h2>
+            <h3>GET REQUEST<small>旅行者からのリクエストを見る</small></h3>
             <section>
             </section>
-            <h2>Request To Tourists</h2>
+            <h3>CHAT<small>気になる事業者や旅行者にコンタクト</small></h3>
             <section>
             </section>
           </React.Fragment>
         ) : (
           <React.Fragment>
-            <h2>How To use</h2>
+            <h3>SEND REQUEST</h3>
             <section>
             </section>
-            <h2>Send Request</h2>
+            <h3>WAIT FOR CONTACT</h3>
             <section>
             </section>
           </React.Fragment>

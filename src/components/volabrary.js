@@ -3,7 +3,7 @@ export const vocabularies = {
         'Sign In': 'サインイン',
         'Sign Up': 'サインアップ',
         'Sign Out': 'サインアウト',
-        'Sign in to your account': 'アカウントにサインイン',
+        'Sign in to your account': 'サインイン',
         'Username *': 'ユーザー名 *',
         'Password *': 'パスワード *',
         'Enter your username': 'ユーザー名を入力',

@@ -8,6 +8,9 @@ import awsmobile from './aws-exports';
 import { Button, List, ListItem, ListItemText } from '@material-ui/core';
 import Select from 'react-select';
 import UUID from 'uuidjs';
+import Particles from 'react-particles-js';
+import { I18n } from 'aws-amplify';
+import { vocabularies } from './components/volabrary';
 
 import Home from './components/Home'
 import Services from './components/Services';
@@ -22,10 +25,12 @@ import Message from './components/Message'
 import { createTourist, createAgent, updateAgent } from './graphql/mutations'
 import { listTouristBySpecificOwner, listAgentBySpecificOwner } from './graphql/queries';
 Amplify.configure(awsmobile);
+I18n.putVocabularies(vocabularies);
+I18n.setLanguage('ja');
 
 const App = () => {
   const [authState, setAuthState] = useState();
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(undefined);
   const [type, SetType] = useState(null);
   const [isAgentRegisterd, SetIsAgentRegisterd] = useState(false);
   const [agentArea, SetAgentArea] = useState(null);
@@ -45,8 +50,7 @@ const App = () => {
 
   // UserType
   const getTouristType = async () => {
-    if (type === null && touristCount === 0 && user !== null) {
-      touristCounter(1);
+    if (user) {
       const res = await API.graphql(
         graphqlOperation(listTouristBySpecificOwner, {
           owner: user.username
@@ -54,12 +58,11 @@ const App = () => {
         )
       );
       var info = res.data.listTouristBySpecificOwner;
-      if (info != null && info.items.length > 0) { SetType(info.items[0].type); }
+      if (info != null && info.items.length > 0) { SetType("tourist"); }
     }
   }
   const getAgentType = async () => {
-    if (type === null && agentCount === 0 && user !== null) {
-      agentCounter(1);
+    if (user) {
       const res = await API.graphql(
         graphqlOperation(listAgentBySpecificOwner, {
           owner: user.username
@@ -68,7 +71,7 @@ const App = () => {
       );
       var info = res.data.listAgentBySpecificOwner;
       if (info != null && info.items.length > 0) {
-        SetType(info.items[0].type);
+        SetType("agent");
         SetAgentID(info.items[0].id);
         if (info.items[0].area !== null && info.items[0].business !== null) {
           SetIsAgentRegisterd(true);
@@ -145,7 +148,7 @@ const App = () => {
                         variant="contained"
                         color="primary"
                         onClick={registerTourist}
-                      >Tourist</Button>
+                      >観光客</Button>
                     } />
                   </ListItem>
                   <ListItem>
@@ -154,7 +157,7 @@ const App = () => {
                         variant="contained"
                         color="primary"
                         onClick={registerAgent}
-                      >Agent</Button>
+                      >観光業者</Button>
                     } />
                   </ListItem>
                 </List>
@@ -163,8 +166,8 @@ const App = () => {
                 <header>
                   <nav>
                     <ul>
-                      <li><Link to="/">Home</Link></li>
-                      <li><Link to="/services/">Serivices</Link></li>
+                      <li><Link to="/">HOME</Link></li>
+                      <li><Link to="/services/">SERVICES</Link></li>
                     </ul>
                   </nav>
                 </header>
@@ -195,8 +198,8 @@ const App = () => {
                           <header>
                             <nav>
                               <ul>
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/services/">Serivices</Link></li>
+                                <li><Link to="/">HOME</Link></li>
+                                <li><Link to="/services/">SERVICES</Link></li>
                               </ul>
                             </nav>
                           </header>
@@ -222,11 +225,11 @@ const App = () => {
                           <header>
                             <nav>
                               <ul>
-                                <li><Link to="/">Home</Link></li>
-                                <li><Link to="/services/">Serivices</Link></li>
-                                <li><Link to="/find/">Find</Link></li>
-                                <li><Link to="/analysis/">Analysis</Link></li>
-                                <li><Link to="/requests/">Get Requests</Link></li>
+                                <li><Link to="/">HOME</Link></li>
+                                <li><Link to="/services/">SERVICES</Link></li>
+                                <li><Link to="/find/">FIND</Link></li>
+                                <li><Link to="/analysis/">ANALYSIS</Link></li>
+                                <li><Link to="/requests/">GET REQUEST</Link></li>
                               </ul>
                             </nav>
                           </header>
@@ -255,7 +258,7 @@ const App = () => {
                       <AmplifySignOut />
                       <List>
                         <ListItem key='agent-field_area'>
-                          <div>Area</div>
+                          <div>地域</div>
                           <Select
                             id="area"
                             onChange={handleArea}
@@ -263,7 +266,7 @@ const App = () => {
                           />
                         </ListItem>
                         <ListItem key='pagent-field_business'>
-                          <div>Business</div>
+                          <div>業種</div>
                           <Select
                             id="business"
                             onChange={handleBusiness}
@@ -276,7 +279,7 @@ const App = () => {
                               variant="contained"
                               color="primary"
                               onClick={updateAgentInfo}
-                            >Register</Button>
+                            >登録</Button>
                           } />
                         </ListItem>
                       </List>
@@ -285,8 +288,8 @@ const App = () => {
                       <header>
                         <nav>
                           <ul>
-                            <li><Link to="/">Home</Link></li>
-                            <li><Link to="/services/">Serivices</Link></li>
+                            <li><Link to="/">HOME</Link></li>
+                            <li><Link to="/services/">SERVICES</Link></li>
                           </ul>
                         </nav>
                       </header>
@@ -313,9 +316,9 @@ const App = () => {
                     <header>
                       <nav>
                         <ul>
-                          <li><Link to="/">Home</Link></li>
-                          <li><Link to="/services/">Serivices</Link></li>
-                          <li><Link to="/request/">Request</Link></li>
+                          <li><Link to="/">HOME</Link></li>
+                          <li><Link to="/services/">SERVICES</Link></li>
+                          <li><Link to="/request/">REQUEST</Link></li>
                         </ul>
                       </nav>
                     </header>
@@ -336,10 +339,80 @@ const App = () => {
       )}
     </div>
   ) : (
-    <div>
+    <div className="wrap">
+      <h1 className="top-title">WantToTravel4You</h1>
+      <Particles
+          params={{
+            "particles": {
+                "number": {
+                    "value": 1000,
+                    "density": {
+                        "enable": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "speed": 4,
+                        "size_min": 0.3
+                    }
+                },
+                "line_linked": {
+                    "enable": false
+                },
+                "move": {
+                    "random": true,
+                    "speed": 1,
+                    "direction": "top",
+                    "out_mode": "out"
+                }
+            },
+            "interactivity": {
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "bubble"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "repulse"
+                    }
+                },
+                "modes": {
+                    "bubble": {
+                        "distance": 250,
+                        "duration": 2,
+                        "size": 0,
+                        "opacity": 0
+                    },
+                    "repulse": {
+                        "distance": 400,
+                        "duration": 4
+                    }
+                }
+            }
+          }
+        }
+      />
       <Router>
-        <div className="content-flex-wrap">
-          <div className="profile">
+        <div className="content-top">
+          <div className="content-flex">
+            <header>
+              <nav>
+                <ul>
+                  <li><Link to="/">HOME</Link></li>
+                  <li><Link to="/services/">SERVICES</Link></li>
+                </ul>
+              </nav>
+            </header>
+            <Switch>
+              <Route path="/" exact render={({ match }) => <Home match={match} type={type} area={agentArea} />} />
+              <Route path="/services/" exact component={Services} />
+              <Redirect path="*" to="/" />
+            </Switch>
+          </div>
+          <div className="top-signin">
             <AmplifyAuthenticator>
               <AmplifySignUp
                 slot="sign-up"
@@ -351,25 +424,10 @@ const App = () => {
               />
             </AmplifyAuthenticator>
           </div>
-          <div className="content-flex">
-            <header>
-              <nav>
-                <ul>
-                  <li><Link to="/">Home</Link></li>
-                  <li><Link to="/services/">Serivices</Link></li>
-                </ul>
-              </nav>
-            </header>
-            <Switch>
-              <Route path="/" exact render={({ match }) => <Home match={match} type={type} area={agentArea} />} />
-              <Route path="/services/" exact component={Services} />
-              <Redirect path="*" to="/" />
-            </Switch>
-          </div>
         </div>
       </Router>
     </div>
   );
 }
-export default withAuthenticator(App);
+export default App;
 

@@ -58,6 +58,7 @@ const Analysis = ({ match, area }) => {
   const [ld, SetLD] = useState(null);
   const [ln, SetLN] = useState(null);
   const [lg, SetLG] = useState(null);
+  const [isFirst, SetIsFirst] = useState(true)
 
   const getRequest = async (type) => {
     if (area !== null) {
@@ -68,9 +69,12 @@ const Analysis = ({ match, area }) => {
       ));
       setIsLoading(false);
       [d, n, g] = ReshapeData(res.data.listRequestBySpecificArea.items);
-      SetLD(d);
-      SetLN(n);
-      SetLG(g);
+      if (isFirst) {
+        SetLD(d);
+        SetLN(n);
+        SetLG(g);
+        SetIsFirst(false)
+      }
     }
   }
 
@@ -84,11 +88,11 @@ const Analysis = ({ match, area }) => {
 
   return (
     <React.Fragment>
-      <h2>Analysis in {area}</h2>
+      <h2>{area}の旅行者傾向</h2>
       {ld !== null && ln !== null && lg !== null ? (
-        <AnalysisList isLoading={isLoading} genre={lg} unitGenre="" days={ld} unitDays="days" number={ln} unitNumber="people" />
+        <AnalysisList isLoading={isLoading} genre={lg} unitGenre="" days={ld} unitDays="泊" number={ln} unitNumber="人" />
       ) : (
-        <p>NOOO</p>
+        <p>リクエストはありません</p>
       )}
     </React.Fragment>
   )

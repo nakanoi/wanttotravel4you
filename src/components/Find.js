@@ -56,7 +56,7 @@ const Find = ({ area, username }) => {
 
   return (
     <React.Fragment>
-      <h2>Agents Find in {area}</h2>
+      <h2>{area}で見つかった事業者</h2>
       <FindList
         isLoading={isLoading}
         agents={agents}
