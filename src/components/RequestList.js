@@ -26,7 +26,7 @@ const RequestList = ({ isLoading, requests, getAdditionalRequests, listHeaderTit
           <ListItem key='loadmore'>
             <ListItemText
               primary={
-                <Button onClick={() => getAdditionalRequests()}> More </Button>
+                <Button onClick={() => getAdditionalRequests()}>もっと見る</Button>
               }
             />
           </ListItem>
@@ -93,39 +93,39 @@ function RequestItem({ request, agent }) {
       <table>
         <tbody>
           <tr>
-            <th>Name</th>
+            <th>旅行者名</th>
             <td><Link to={getLink(request.owner)}>{request.owner}</Link></td>
           </tr>
           <tr>
-            <th>Title</th>
+            <th>タイトル</th>
             <td>{request.title}</td>
           </tr>
           <tr>
-            <th>Area</th>
+            <th>地域</th>
             <td>{request.area}</td>
           </tr>
           <tr>
-            <th>Cost</th>
+            <th>予算</th>
             <td>{request.cost}</td>
           </tr>
           <tr>
-            <th>Data</th>
+            <th>出発日</th>
             <td>{request.date}</td>
           </tr>
           <tr>
-            <th>Days</th>
+            <th>滞在日数</th>
             <td>{request.date}</td>
           </tr>
           <tr>
-            <th>Number</th>
+            <th>同行者数</th>
             <td>{request.number}</td>
           </tr>
           <tr>
-            <th>Message</th>
+            <th>詳細</th>
             <td>{request.context}</td>
           </tr>
           <tr>
-            <th>Requested At</th>
+            <th>リクエスト日</th>
             <td>{timestampToTime(request.timestamp)}</td>
           </tr>
         </tbody>
@@ -134,7 +134,7 @@ function RequestItem({ request, agent }) {
         variant="contained"
         color="primary"
         onClick={buildRoom}
-      >Message</Button>
+      >メッセージを送る</Button>
     </ListItem>
   );
 }

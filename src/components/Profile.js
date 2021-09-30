@@ -69,25 +69,31 @@ const Profile = ({ user, usertype, area, business }) => {
         <tbody>
           {user !== null && (
             <tr>
-              <th>Name</th>
+              <th>名前</th>
               <td>{ user.username }</td>
             </tr>
           )}
-          {usertype !== null && (
+          {usertype === 'tourist' && (
             <tr>
-              <th>Type</th>
-              <td>{ usertype }</td>
+              <th>種別</th>
+              <td>旅行者</td>
+            </tr>
+          )}
+          {usertype === 'agent' && (
+            <tr>
+              <th>種別</th>
+              <td>事業者</td>
             </tr>
           )}
           {area !== null && (
             <tr>
-              <th>Area</th>
+              <th>地域</th>
               <td>{ area }</td>
             </tr>
           )}
           {business !== null && (
             <tr>
-              <th>Business</th>
+              <th>業種</th>
               <td>{ business }</td>
             </tr>
           )}

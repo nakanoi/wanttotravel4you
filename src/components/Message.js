@@ -126,41 +126,47 @@ const Message = ({ username }) => {
 
   return (
     <React.Fragment>
-      <TextField
-        id="context"
-        label="DETAILS"
-        multiline
-        rowsMax="8"
-        variant="filled"
-        value={context}
-        onChange={handleContext}
-        margin="normal"
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={sendMessage}
-      >Send</Button>
-      <TextField
-        id="context"
-        label="Join Member"
-        multiline
-        rowsMax="8"
-        variant="filled"
-        value={joinUser}
-        onChange={handleJoin}
-        margin="normal"
-      />
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={joinMember}
-      >Invite</Button>
-      <MessageList
-        isLoading={isLoading}
-        messages={messages}
-        getAdditionalMessages={getAdditionalMessage}
-      />
+      <div id="message-wrap">
+        <TextField
+          id="message"
+          label="メッセージ"
+          multiline
+          rowsMax="8"
+          variant="filled"
+          value={context}
+          onChange={handleContext}
+          margin="normal"
+          className="message"
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={sendMessage}
+        >送信</Button>
+      </div>
+      <div id="invite-wrap">
+        <TextField
+          id="invite"
+          label="ユーザー名"
+          multiline
+          rowsMax="8"
+          variant="filled"
+          value={joinUser}
+          onChange={handleJoin}
+          margin="normal"
+          className="invite"
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={joinMember}
+        >招待</Button>
+        <MessageList
+          isLoading={isLoading}
+          messages={messages}
+          getAdditionalMessages={getAdditionalMessage}
+        />
+      </div>
     </React.Fragment>
   )
 }

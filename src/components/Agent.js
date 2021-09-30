@@ -4,7 +4,7 @@ import logo from './../logo.svg';
 function Agent () {
   return (
     <div>
-      <h1>Tourist</h1>
+      <h2>Tourist</h2>
       <header>
         <img src={logo} className="App-logo" alt="logo" />
         <h2>We now have Auth!</h2>

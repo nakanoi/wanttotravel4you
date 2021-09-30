@@ -100,132 +100,144 @@ const Request = () => {
   }
 
   return (
-    <List>
-      <ListItem key='request_title'>
-        <ListItemText primary={
-        <TextField
-          id="context"
-          label="DETAILS"
-          multiline
-          rowsMax="8"
-          variant="filled"
-          value={title}
-          onChange={handleTitle}
-          margin="normal"
-        />
-      } />
-      </ListItem>
-      <ListItem key='request_area'>
-        <div>DESCRIPTION</div>
-        <Select
-          id="area"
-          onChange={handleArea}
-          options={options.AREA_OPTIONS}
-        />
-      </ListItem>
-      <ListItem key='request_cost'>
-        <ListItemText primary={
+    <React.Fragment>
+      <h2>リクエスト</h2>
+      <List>
+        <ListItem key='request_title'>
+          <p>旅行タイトル</p>
+          <ListItemText primary={
           <TextField
-            id="cost"
-            label="COST"
+            id="title"
             multiline
             rowsMax="8"
             variant="filled"
-            type="number"
-            value={cost}
-            onChange={handleCost}
+            value={title}
+            onChange={handleTitle}
             margin="normal"
+            className="input"
           />
         } />
-      </ListItem>
-      <ListItem key='request_number'>
-        <ListItemText primary={
-          <TextField
-            id="number"
-            label="FELLOW NUMBER"
-            multiline
-            rowsMax="8"
-            variant="filled"
-            type="number"
-            value={number}
-            onChange={handleNumber}
-            margin="normal"
+        </ListItem>
+        <ListItem key='request_area'>
+          <p>目的地</p>
+          <Select
+            id="area"
+            onChange={handleArea}
+            options={options.AREA_OPTIONS}
+            className="input"
           />
-        } />
-      </ListItem>
-      <ListItem key='request_date'>
-        <div>DEPARTURE</div>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <KeyboardDatePicker
-            value={date}
-            onChange={handleDate}
+        </ListItem>
+        <ListItem key='request_cost'>
+          <p>費用</p>
+          <ListItemText primary={
+            <TextField
+              id="cost"
+              multiline
+              rowsMax="8"
+              variant="filled"
+              type="number"
+              value={cost}
+              onChange={handleCost}
+              margin="normal"
+              className="input"
+            />
+          } />
+        </ListItem>
+        <ListItem key='request_number'>
+          <p>同行者数</p>
+          <ListItemText primary={
+            <TextField
+              id="number"
+              multiline
+              rowsMax="8"
+              variant="filled"
+              type="number"
+              value={number}
+              onChange={handleNumber}
+              margin="normal"
+              className="input"
+            />
+          } />
+        </ListItem>
+        <ListItem key='request_date'>
+          <p>出発日</p>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+              value={date}
+              onChange={handleDate}
+              className="input"
+            />
+          </MuiPickersUtilsProvider>
+        </ListItem>
+        <ListItem key='request_days'>
+          <p>滞在日数</p>
+          <ListItemText primary={
+            <TextField
+              id="days"
+              multiline
+              rowsMax="8"
+              type="number"
+              variant="filled"
+              value={days}
+              onChange={handleDays}
+              endAdornment={<InputAdornment position="end">stays</InputAdornment>}
+              margin="normal"
+              className="input"
+            />
+          } />
+        </ListItem>
+        <ListItem key='request_genre'>
+          <p>旅行ジャンル</p>
+          <Select
+            id="genre"
+            onChange={handleGenre}
+            options={options.GENRE_OPTIONS}
+            className="input"
           />
-        </MuiPickersUtilsProvider>
-      </ListItem>
-      <ListItem key='request_days'>
-        <ListItemText primary={
-          <TextField
-            id="days"
-            label="STAYS"
-            multiline
-            rowsMax="8"
-            type="number"
-            variant="filled"
-            value={days}
-            onChange={handleDays}
-            endAdornment={<InputAdornment position="end">stays</InputAdornment>}
-            margin="normal"
-          />
-        } />
-      </ListItem>
-      <ListItem key='request_genre'>
-        <div>GENRE</div>
-        <Select
-          id="genre"
-          label="GENRE"
-          onChange={handleGenre}
-          options={options.GENRE_OPTIONS}
-        />
-      </ListItem>
-      <ListItem key='request_range'>
-        <ListItemText primary={
-          <TextField
-            id="range"
-            label="RANGE"
-            multiline
-            rowsMax="8"
-            type="number"
-            variant="filled"
-            value={range}
-            onChange={handleRange}
-            margin="normal"
-          />
-        } />
-      </ListItem>
-      <ListItem key='request_context'>
-        <ListItemText primary={
-          <TextField
-            id="context"
-            label="DETAILS"
-            multiline
-            rowsMax="8"
-            variant="filled"
-            value={context}
-            onChange={handleContext}
-            margin="normal"
-          />
-        } />
-      </ListItem>
-      <ListItem key='request-button'>
-        <ListItemText primary={
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={sendRequest}
-          >Request</Button>
-        } />
-      </ListItem>
-    </List>
+        </ListItem>
+        <ListItem key='request_range'>
+          <p>旅行範囲</p>
+          <ListItemText primary={
+            <TextField
+              id="range"
+              multiline
+              rowsMax="8"
+              type="number"
+              variant="filled"
+              value={range}
+              onChange={handleRange}
+              margin="normal"
+              className="input"
+            />
+          } />
+        </ListItem>
+        <ListItem key='request_context'>
+          <p>詳細</p>
+          <ListItemText primary={
+            <TextField
+              id="context"
+              multiline
+              rowsMax="8"
+              variant="filled"
+              value={context}
+              onChange={handleContext}
+              margin="normal"
+              className="input textarea"
+            />
+          } />
+        </ListItem>
+        <ListItem key='request-button'>
+          <ListItemText primary={
+            <Button
+              variant="contained"
+              color="primary"
+              className="input textarea"
+              onClick={sendRequest}
+            >Request</Button>
+          } />
+        </ListItem>
+      </List>
+    </React.Fragment>
   );
 }
 

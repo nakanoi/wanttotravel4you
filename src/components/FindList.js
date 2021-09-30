@@ -28,7 +28,7 @@ export default function FindList({ isLoading, agents, getAdditionalAgents, usern
           >
             <ListItemText
               primary={
-                <Button onClick={() => getAdditionalAgents()}> More </Button>
+                <Button onClick={() => getAdditionalAgents()}>もっと見る</Button>
               }
             />
           </ListItem>
@@ -91,28 +91,29 @@ function FindItem({ agent, username }) {
         <div>
           <table className="list-profile">
             <tr>
-              <th>Name</th>
+              <th>名前</th>
               <td>{agent.owner}</td>
             </tr>
             <tr>
-              <th>Area</th>
+              <th>地域</th>
               <td>{agent.area}</td>
             </tr>
             <tr>
-              <th>Business</th>
+              <th>業種</th>
               <td>{agent.business}</td>
             </tr>
           </table>
           <div>
             <div>
-              <Link to={getLink(agent.owner)}>See Profile</Link>
+              <Link to={getLink(agent.owner)}>プロフィールを見る</Link>
             </div>
           </div>
           <Button
             variant="contained"
             color="primary"
             onClick={buildRoom}
-          >Message</Button>
+            className="find-button"
+          >メッセージを送る</Button>
         </div>
       </ListItem>
     )

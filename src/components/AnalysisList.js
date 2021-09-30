@@ -15,15 +15,15 @@ const AnalysisList = ({ isLoading, genre, unitGenre, days, unitDays, number, uni
         </div>
         :
         <List disablePadding>
-          <h3>Genre</h3>
+          <h3>旅行ジャンル</h3>
           <ListItem key={UUID.generate()}>
             <DataList data={genre} unit={unitGenre} />
           </ListItem>
-          <h3>Stay Days</h3>
+          <h3>滞在日数</h3>
           <ListItem key={UUID.generate()}>
             <DataList data={days} unit={unitDays} />
           </ListItem>
-          <h3>Brings</h3>
+          <h3>同行者数</h3>
           <ListItem key={UUID.generate()}>
             <DataList data={number} unit={unitNumber} />
           </ListItem>
@@ -61,15 +61,9 @@ const AnalysisItem = ({ rank, item, unit }) => {
       <table>
         <tbody>
           <tr>
-            <th>No.</th>
-            <td>{rank}</td>
-          </tr>
-          <tr>
-            <th>Name</th>
+            <th>第{ rank }位</th>
             <td>{item.key}{unit}</td>
-          </tr>
-          <tr>
-            <th>Count</th>
+            <th>リクエスト数</th>
             <td>{item.count}</td>
           </tr>
         </tbody>
