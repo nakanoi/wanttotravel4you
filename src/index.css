@@ -222,3 +222,15 @@ li.MuiListItem-root td {
 .fouryou-wrap img {
   width: 100%;
 }
+
+/* get request */
+.request-table {
+  width: 100%;
+  margin-bottom: 1em;
+}
+.request-table th {
+  width: 30%;
+}
+.request-table td {
+  width: 70%;
+}

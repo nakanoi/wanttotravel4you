@@ -90,7 +90,7 @@ function RequestItem({ request, agent }) {
 
   return (
     <ListItem alignItems='flex-start' key={UUID.generate()}>
-      <table>
+      <table class="request-table">
         <tbody>
           <tr>
             <th>旅行者名</th>
