@@ -1,9 +1,11 @@
 import React from "react";
+import Fouryou from './../fouryou.jpg'
 
 const Services = () => {
   return (
       <div>
         <h2>SERVICES</h2>
+        <p className="fouryou-wrap"><img src={Fouryou} alt="fouryou" /></p>
         <h3>4YOUの使い方って・・・？</h3>
         <section>
           <ol>
