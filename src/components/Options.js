@@ -183,6 +183,7 @@ export const GENRE_OPTIONS = [
   { value: '遺跡観光', label: '遺跡観光' },
   { value: 'パワースポット', label: 'パワースポット' },
   { value: 'ドライブ', label: 'ドライブ' },
+  { value: 'BBQ', label: 'BBQ'},
   { value: '修学旅行', label: '修学旅行' },
   { value: 'スポーツ', label: 'スポーツ' },
   { value: 'グルメ', label: 'グルメ' },
